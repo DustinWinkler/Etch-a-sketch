@@ -84,14 +84,18 @@ html {
         start()
     }
     function draw(){
-        if (pen == true) {this.style.backgroundColor = 'black'}
+        if (pen == true) {this.style.backgroundColor = 'black'
+            this.style.opacity = '100%'
+    }
         if (rainbow == true) {
             let R = Math.floor(Math.random() * 256);
             let G = Math.floor(Math.random() * 256);
             let B = Math.floor(Math.random() * 256)
-            this.style.setProperty('background-color', `rgb(${R},${G},${B})`)}; 
+            this.style.setProperty('background-color', `rgb(${R},${G},${B})`)
+            this.style.opacity = '100%'
+        }; 
          if (peepo == true) {
-            this.style.opacity = '0'
+            this.style.opacity = '0%'
         }    
     }
 
