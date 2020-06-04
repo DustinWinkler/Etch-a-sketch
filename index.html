@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<head><title>Etch-a-Sketch</title></head>
+<html>
+    <button onclick = 'btn()'>Change Grid Size</button>
+    <button onclick = 'erase()'>Erase Grid</button>
+    <button onclick = 'rainbowBtn()'>Rainbow Marker</button>
+    <button onclick = 'penBtn()'>Pen</button>
+    <button onclick = 'peepoBtn()'>Peepo ( ͡° ͜ʖ ͡°)</button>    
+<div class = 'container'>
+    
+    </div>
+</html>
+
+<style>
+html {
+    background-color:  skyblue;
+}
+.container {
+    display: grid;
+    grid-template-columns: repeat(64, 1fr);
+    grid-template-rows: repeat(64, 1fr);
+    width: 600px;
+    height: 600px;
+    position: center;
+    border: 5px solid rgb(100, 100, 100);
+    margin: 30px auto;
+    background-color: white;
+    background-size: 600px 600px;
+}
+
+
+.gridTile {
+    
+    width: auto;
+    height: auto;
+}
+
+</style>
+
+<script>
+    let tileCreated = document.querySelector('.gridTile')
+    const container = document.querySelector('.container')
+    let rainbow, peepo, gridSize;
+    let pen = true;
+    function createGrid(num) {
+        gridSize = num
+        container.style.gridTemplateColumns = `repeat(${num}, 1fr)`
+        container.style.gridTemplateRows = `repeat(${num}, 1fr)`
+        for (i = 0; i < num ** 2; i++) {
+            let tile = document.createElement('div')
+            tile.classList.add('gridTile')
+            tile.style.backgroundColor = 'white'
+            tile.textContent = ""
+            tile.addEventListener('mouseover', draw)
+            container.appendChild(tile)
+        }
+       tileCreated.style.backgroundColor = 'white'
+    }
+    function createGridPeepo(num) {
+        container.style.gridTemplateColumns = `repeat(${num}, 1fr)`
+        container.style.gridTemplateRows = `repeat(${num}, 1fr)`
+        for (i = 0; i < num ** 2; i++) {
+            let tile = document.createElement('div')
+            tile.classList.add('gridTile')
+            tile.style.backgroundColor = 'black'
+            tile.textContent = ""
+            tile.addEventListener('mouseover', draw)
+            container.appendChild(tile)
+            
+        }
+        
+    }
+    function start() {
+        createGrid(prompt('How many tiles? (larger than 64 gets laggy)'))
+        container.style.backgroundImage = ''
+    }
+      
+    function btn() {
+        erase()
+        start()
+    }
+    function erase() {
+        container.querySelectorAll('.gridTile').forEach(gridTile => gridTile.remove())
+        start()
+    }
+    function draw(){
+        if (pen == true) {this.style.backgroundColor = 'black'}
+        if (rainbow == true) {
+            let R = Math.floor(Math.random() * 256);
+            let G = Math.floor(Math.random() * 256);
+            let B = Math.floor(Math.random() * 256)
+            this.style.setProperty('background-color', `rgb(${R},${G},${B})`)}; 
+         if (peepo == true) {
+            this.style.opacity = '0'
+        }    
+    }
+
+    function rainbowBtn(){
+        rainbow = true
+        pen = false
+        peepo = false
+    }
+    function penBtn(){
+        rainbow = false
+        pen = true
+        peepo = false
+    }
+    function peepoBtn(){
+        rainbow = false
+        pen = false
+        peepo = true
+        container.querySelectorAll('.gridTile').forEach(gridTile => gridTile.remove())
+        createGridPeepo(8);
+        container.style.backgroundImage = 'url(/images/peepo.png)'
+        
+    }
+start()
+</script>
